@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>MR NIPUN OFC / TECH-WEB</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Official website of H.M. NIPUN DHANUJAYA (MR NIPUN OFC) — Full-Stack Developer / UI-UX Designer." />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root{
+      --red:#e63946; --purple:#7678ed; --ink:#1d1d1d; --text:#f1faee;
+      --glass:rgba(255,255,255,.10); --glass-b:rgba(255,255,255,.18);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0}
+    body{
+      background:linear-gradient(135deg,#1d1d1d,#3d348b);
+      color:var(--text);
+      min-height:100vh; overflow-x:hidden;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,"Helvetica Neue",Arial,"Noto Sans",sans-serif;
+    }
+    a{color:inherit;text-decoration:none}
+
+    .container{max-width:1200px;margin:0 auto;padding:20px 20px 40px}
+    .page-wrap{padding-top:84px; min-height:calc(100vh - 84px - 80px)}
+
+    /* Header */
+    .topbar{position:fixed;top:0;left:0;width:100%;height:70px;background:rgba(29,29,29,.9);
+      backdrop-filter:blur(8px);border-bottom:1px solid var(--glass-b);z-index:1000}
+    .topbar-inner{max-width:1200px;margin:0 auto;height:100%;display:flex;align-items:center;justify-content:space-between;padding:0 16px}
+    .brand{font-weight:800;font-size:20px;background:linear-gradient(90deg,var(--red),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .menu{display:flex;gap:10px}
+    .btn{display:inline-flex;align-items:center;justify-content:center;background:transparent;color:var(--text);
+      border:1px solid var(--glass-b);border-radius:10px;padding:8px 14px;cursor:pointer;transition:filter .12s ease, transform .12s ease}
+    .btn:hover{filter:brightness(1.05);transform:translateY(-1px)}
+    .btn-primary{background:var(--red);border-color:var(--red);color:#fff}
+
+    /* Hamburger + Drawer */
+    .hamburger{display:none;position:relative;width:48px;height:40px;border-radius:12px;border:1px solid var(--glass-b);
+      background:rgba(255,255,255,.06);backdrop-filter:blur(6px);cursor:pointer}
+    .hamburger .bar{position:absolute;left:50%;width:26px;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--red),#ff6ea6);
+      transform:translateX(-50%);transition:transform .22s ease,opacity .18s ease}
+    .hamburger .bar:nth-child(1){top:11px}
+    .hamburger .bar:nth-child(2){top:18.5px}
+    .hamburger .bar:nth-child(3){top:26px}
+    .hamburger.active .bar:nth-child(1){transform:translate(-50%,7px) rotate(45deg)}
+    .hamburger.active .bar:nth-child(2){opacity:0}
+    .hamburger.active .bar:nth-child(3){transform:translate(-50%,-7px) rotate(-45deg)}
+    @media (max-width:900px){.menu{display:none}.hamburger{display:block}}
+
+    .drawer-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:1098;display:none}
+    .drawer-backdrop.show{display:block}
+    .drawer{position:fixed;top:0;right:-380px;height:100vh;width:min(92vw,360px);
+      background:linear-gradient(135deg,rgba(118,120,237,.22),rgba(230,57,70,.22));backdrop-filter:blur(12px);
+      border-left:1px solid var(--glass-b);box-shadow:-12px 0 28px rgba(0,0,0,.45);z-index:1099;
+      padding:86px 18px 22px;transition:right .24s ease;overflow-y:auto}
+    .drawer.open{right:0}
+    .drawer-header{position:fixed;top:0;right:0;width:min(92vw,360px);height:70px;display:flex;align-items:center;gap:10px;padding:0 18px;
+      border-left:1px solid var(--glass-b);border-bottom:1px solid var(--glass-b);background:linear-gradient(180deg,rgba(0,0,0,.35),rgba(0,0,0,0));
+      backdrop-filter:blur(8px);z-index:1100}
+    .drawer-title{font-weight:800;display:flex;align-items:center;gap:10px}
+    .pulse{width:10px;height:10px;border-radius:50%;background:#9b5cf0;box-shadow:0 0 0 6px rgba(155,92,240,.25)}
+    .drawer-close{margin-left:auto;background:transparent;border:1px solid var(--glass-b);width:40px;height:40px;border-radius:999px;color:#fff;font-size:20px;cursor:pointer}
+    .navlist{list-style:none;margin:6px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
+    .navitem{width:100%;display:flex;align-items:center;justify-content:center;padding:16px;border-radius:999px;border:1px solid rgba(255,255,255,.22);
+      color:#fff;background:linear-gradient(135deg,rgba(255,255,255,.16),rgba(0,0,0,.10));box-shadow:0 10px 26px rgba(0,0,0,.22),inset 0 1px 0 rgba(255,255,255,.06);
+      transition:transform .12s ease,filter .12s ease}
+    .navitem:hover{filter:brightness(1.05);transform:translateY(-1px)}
+    .navitem.cta{background:linear-gradient(135deg,rgba(230,57,70,.9),rgba(118,120,237,.75))}
+
+    /* Sections */
+    .hero{display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:100px;margin-bottom:30px}
+    .profile-container{position:relative;width:240px;height:240px;margin-bottom:24px}
+    .profile-image{width:100%;height:100%;border-radius:50%;object-fit:cover;border:5px solid var(--red);position:relative;z-index:2}
+    .light-ring{position:absolute;top:-10px;left:-10px;right:-10px;bottom:-10px;border-radius:50%;
+      background:conic-gradient(var(--red),var(--purple),#d00000,var(--red));animation:spin 4s linear infinite;z-index:1}
+    .light-ring::after{content:"";position:absolute;inset:5px;background:#1d1d1d;border-radius:50%}
+    .hero-title{font-size:34px;margin-bottom:10px;background:linear-gradient(90deg,var(--red),var(--purple));
+      -webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .hero-sub{opacity:.9}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    @media (prefers-reduced-motion: reduce){.light-ring{animation:none}}
+
+    .section{background:var(--glass);backdrop-filter:blur(8px);border:1px solid var(--glass-b);border-radius:14px;padding:24px;margin-bottom:32px;box-shadow:0 6px 18px rgba(0,0,0,.22)}
+    .section-title{font-size:26px;margin-bottom:18px;text-align:center;position:relative;display:inline-block;left:50%;transform:translateX(-50%)}
+    .section-title::after{content:"";position:absolute;bottom:-10px;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--red),var(--purple));border-radius:2px}
+
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:18px}
+    .card{background:var(--glass);border:1px solid var(--glass-b);border-radius:12px;padding:18px;box-shadow:0 5px 14px rgba(0,0,0,.18)}
+    .card-title{font-size:20px;margin-bottom:8px;color:var(--red)}
+
+    .info-card{padding:22px;border-radius:16px}
+    .info-title{font-size:26px;margin:0 0 12px 0;font-weight:800}
+    .info-underline{height:4px;width:120px;border-radius:999px;background:linear-gradient(90deg,var(--red),var(--purple))}
+    .info-list{margin-top:12px;display:flex;flex-direction:column;gap:14px}
+    .info-row{display:flex;align-items:center;gap:12px}
+    .info-icon{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;background:rgba(255,255,255,.08);border:1px solid var(--glass-b);color:var(--red);font-size:18px}
+    .link-red{color:var(--red)}
+
+    .skills-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+    .skill-card{display:flex;flex-direction:column;justify-content:space-between;align-items:center;min-height:200px;padding:18px;background:var(--glass);border:1px solid var(--glass-b);border-radius:16px;transition:transform .15s ease,filter .15s ease}
+    .skill-card:hover{transform:translateY(-5px);filter:brightness(1.04)}
+    .skill-top{display:flex;flex-direction:column;align-items:center;gap:8px}
+    .skill-card i{font-size:38px;color:var(--red)}
+    .skill-title{margin:0;font-size:20px;font-weight:700}
+    .skill-sub{margin:6px 0 0 0;opacity:.9;text-align:center}
+    @media (max-width:900px){.skills-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.skills-grid>*:last-child:nth-child(odd){grid-column:1/-1;justify-self:center;max-width:320px}}
+    @media (max-width:420px){.skills-grid{grid-template-columns:1fr}}
+
+    /* Footer */
+    .site-footer{text-align:center;padding:28px 0;min-height:80px;border-top:1px solid var(--glass-b);color:#cfcfe1}
+
+    /* Dragon Intro */
+    .intro{position:fixed;inset:0;z-index:20000;display:grid;place-items:center;background:radial-gradient(60% 60% at 50% 40%, rgba(16,10,30,.95), rgba(8,6,20,.96) 60%, rgba(0,0,0,.98));animation:introFadeIn .2s ease}
+    @keyframes introFadeIn{from{opacity:0}to{opacity:1}}
+    .intro-core{position:relative;width:min(94vw,560px);aspect-ratio:1/1;display:grid;place-items:center}
+    .intro-ring{position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 0deg, var(--red), var(--purple), #d00000, var(--red));
+      filter:blur(10px) brightness(1.1);animation:ringSpin 2.2s linear infinite;
+      mask:radial-gradient(closest-side, transparent 67%, #000 68%), radial-gradient(farthest-side, #000 63%, transparent 64%);
+      -webkit-mask:radial-gradient(closest-side, transparent 67%, #000 68%), radial-gradient(farthest-side, #000 63%, transparent 64%)}
+    @keyframes ringSpin{to{transform:rotate(360deg)}}
+    .intro-dragon{width:68%;height:auto;z-index:2;filter:drop-shadow(0 6px 16px rgba(0,0,0,.6));animation:dragonPop .6s cubic-bezier(.2,.8,.2,1) both .1s}
+    @keyframes dragonPop{0%{transform:scale(.7);opacity:0}60%{transform:scale(1.06);opacity:1}100%{transform:scale(1)}}
+    .flame{transform-origin:140px 100px;animation:flameFlicker .9s ease-in-out infinite alternate,flamePulse 1.6s ease-in-out infinite;filter:url(#glow)}
+    @keyframes flameFlicker{from{transform:scale(0.96) translateX(-1px)}to{transform:scale(1.04) translateX(1px)}}
+    @keyframes flamePulse{0%,100%{opacity:.85}50%{opacity:1}}
+    .smk{animation:smoke 1.6s ease-in-out infinite}
+    .smk1{animation-delay:.0s}.smk2{animation-delay:.25s}.smk3{animation-delay:.45s}
+    @keyframes smoke{0%{opacity:.0;transform:translate(0,0) scale(.8)}40%{opacity:.65}100%{opacity:0;transform:translate(6px,-8px) scale(1.4)}}
+    .intro-title{position:absolute;bottom:8%;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+    .intro-top{font-weight:900;letter-spacing:.06em;font-size:clamp(16px,3.8vw,22px);background:linear-gradient(90deg,var(--red),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:0 0 16px rgba(230,57,70,.35);animation:titleIn .5s ease .2s both}
+    .intro-sub{font-weight:800;font-size:clamp(14px,3.2vw,18px);opacity:.92;color:#e9e9ff;letter-spacing:.22em;animation:titleIn .6s ease .28s both}
+    @keyframes titleIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+    @media (prefers-reduced-motion: reduce){.light-ring,.intro-ring,.flame,.smk,.intro-dragon{animation:none}}
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a href="#" class="brand">MR NIPUN OFC / TECH-WEB</a>
+      <nav class="menu" aria-label="Main">
+        <a class="btn btn-primary" href="#home">Home</a>
+        <a class="btn" href="#about">About</a>
+        <a class="btn" href="#projects">Projects</a>
+        <a class="btn" href="#skills">Skills</a>
+        <a class="btn" href="#social">Social</a>
+        <a class="btn" href="#contact">Contact</a>
+      </nav>
+      <button class="hamburger" id="hamburger" aria-label="Open menu"><span class="bar"></span><span class="bar"></span><span class="bar"></span></button>
+    </div>
+  </header>
+
+  <!-- Drawer -->
+  <div class="drawer-backdrop" id="backdrop"></div>
+  <nav class="drawer" id="drawer" aria-label="Mobile Menu">
+    <div class="drawer-header">
+      <div class="drawer-title"><span class="pulse"></span> MR NIPUN OFC / TECH-WEB</div>
+      <button class="drawer-close" id="drawerClose" aria-label="Close menu">×</button>
+    </div>
+    <ul class="navlist">
+      <li><a class="navitem cta" href="#home">Home</a></li>
+      <li><a class="navitem" href="#about">About</a></li>
+      <li><a class="navitem" href="#projects">Projects</a></li>
+      <li><a class="navitem" href="#skills">Skills</a></li>
+      <li><a class="navitem" href="#social">Social</a></li>
+      <li><a class="navitem" href="#contact">Contact</a></li>
+      <li><a class="navitem" href="#privacy">Privacy</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-wrap">
+    <main class="container">
+      <!-- HERO -->
+      <section id="home" class="hero">
+        <div class="profile-container">
+          <div class="light-ring" aria-hidden="true"></div>
+          <img class="profile-image" alt="MR NIPUN"
+               src="https://raw.githubusercontent.com/maverick455456/ADMINS/refs/heads/main/ADMIN-DP/MR%20NIPUN%20OFC.png">
+        </div>
+        <h1 class="hero-title">MR NIPUN OFC / TECH-WEB</h1>
+        <p class="hero-sub">Full-Stack Developer · UI/UX Designer · Tech Enthusiast</p>
+      </section>
+
+      <!-- PERSONAL INFO -->
+      <section id="about" class="section info-card" aria-labelledby="info-title">
+        <h2 id="info-title" class="info-title">Personal Information</h2>
+        <div class="info-underline"></div>
+        <div class="info-list">
+          <div class="info-row"><div class="info-icon"><i class="fa-solid fa-user"></i></div><div><strong>Name:</strong> H.M. NIPUN DHANUJAYA</div></div>
+          <div class="info-row"><div class="info-icon"><i class="fa-solid fa-cake-candles"></i></div><div><strong>Age:</strong> 18</div></div>
+          <div class="info-row"><div class="info-icon"><i class="fa-solid fa-location-dot"></i></div><div><strong>From:</strong> Sri Lanka</div></div>
+          <div class="info-row"><div class="info-icon"><i class="fa-solid fa-phone"></i></div><div><strong>Contact:</strong> <a class="link-red" href="https://wa.me/+94757255903" target="_blank" rel="noopener">+94 75 725 5903</a></div></div>
+          <div class="info-row"><div class="info-icon"><i class="fa-solid fa-envelope"></i></div><div><strong>Email:</strong> <a class="link-red" href="mailto:mrnipun@techweb.com">mrnipun@techweb.com</a></div></div>
+        </div>
+      </section>
+
+      <!-- PROJECTS -->
+      <section id="projects" class="section">
+        <h2 class="section-title">My Projects</h2>
+        <div class="projects-grid">
+          <article class="card"><h3 class="card-title">MHT Website</h3><p>A modern responsive site with interactive features.</p></article>
+          <article class="card"><h3 class="card-title">E-commerce Platform</h3><p>Full-stack e-commerce with payments and admin dashboard.</p></article>
+          <article class="card"><h3 class="card-title">IoT Home Automation</h3><p>Smart-home system using Arduino with mobile control.</p></article>
+        </div>
+      </section>
+
+      <!-- SKILLS -->
+      <section id="skills" class="section">
+        <h2 class="section-title">My Skills</h2>
+        <div class="skills-grid">
+          <article class="skill-card"><div class="skill-top"><i class="fab fa-java"></i><h3 class="skill-title">Java</h3></div><p class="skill-sub">Backend Development</p></article>
+          <article class="skill-card"><div class="skill-top"><i class="fab fa-python"></i><h3 class="skill-title">Python</h3></div><p class="skill-sub">Scripting & Automation</p></article>
+          <article class="skill-card"><div class="skill-top"><i class="fas fa-server"></i><h3 class="skill-title">Web Server</h3></div><p class="skill-sub">Server Management</p></article>
+          <article class="skill-card"><div class="skill-top"><i class="fas fa-microchip"></i><h3 class="skill-title">Arduino Micro Devices</h3></div><p class="skill-sub">IoT Development</p></article>
+          <article class="skill-card"><div class="skill-top"><i class="fab fa-html5"></i><h3 class="skill-title">HTML/CSS</h3></div><p class="skill-sub">Frontend Development</p></article>
+          <article class="skill-card"><div class="skill-top"><i class="fab fa-react"></i><h3 class="skill-title">NextJS</h3></div><p class="skill-sub">React Framework</p></article>
+          <article class="skill-card"><div class="skill-top"><i class="fas fa-camera"></i><h3 class="skill-title">Photography</h3></div><p class="skill-sub">Creative Photography</p></article>
+          <article class="skill-card"><div class="skill-top"><i class="fas fa-film"></i><h3 class="skill-title">Animation</h3></div><p class="skill-sub">Motion Graphics</p></article>
+          <article class="skill-card"><div class="skill-top"><i class="fas fa-palette"></i><h3 class="skill-title">Logo Design</h3></div><p class="skill-sub">Brand Identity</p></article>
+        </div>
+      </section>
+
+      <!-- SOCIAL -->
+      <section id="social" class="section">
+        <h2 class="section-title">My Social Media</h2>
+        <div class="projects-grid">
+          <a class="card" href="https://whatsapp.com/channel/0029Vb9bLMqGJP8GmAHxUd02/3683" target="_blank" rel="noopener"><h3 class="card-title"><i class="fab fa-whatsapp"></i> WhatsApp Channel</h3><p>Join updates.</p></a>
+          <a class="card" href="https://www.facebook.com/share/1KKrZV2NM8/" target="_blank" rel="noopener"><h3 class="card-title"><i class="fab fa-facebook"></i> Facebook Account</h3><p>Follow me.</p></a>
+          <a class="card" href="https://www.facebook.com/share/17cgrxBQix/" target="_blank" rel="noopener"><h3 class="card-title"><i class="fab fa-facebook"></i> Facebook Page</h3><p>Official page.</p></a>
+          <a class="card" href="https://vm.tiktok.com/ZSHc9tLctfuKo-3zM0Z/" target="_blank" rel="noopener"><h3 class="card-title"><i class="fab fa-tiktok"></i> TikTok</h3><p>Clips & dev life.</p></a>
+          <a class="card" href="https://youtube.com/@mrprofesormht?si=aT8XOonaZEj1YBdo" target="_blank" rel="noopener"><h3 class="card-title"><i class="fab fa-youtube"></i> YouTube</h3><p>Videos & tutorials.</p></a>
+          <a class="card" href="https://www.instagram.com/mr_nipun_ofc/?utm_source=ig_web_button_share_sheet" target="_blank" rel="noopener"><h3 class="card-title"><i class="fab fa-instagram"></i> Instagram</h3><p>Photos & stories.</p></a>
+          <a class="card" href="https://t.me/Profesor9999" target="_blank" rel="noopener"><h3 class="card-title"><i class="fab fa-telegram"></i> Telegram</h3><p>DM me directly.</p></a>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact" class="section">
+        <h2 class="section-title">Contact</h2>
+        <ul class="projects-grid" style="grid-template-columns:1fr;">
+          <li class="card"><strong>Email:</strong> <a class="link-red" href="mailto:mrnipun@techweb.com">mrnipun@techweb.com</a></li>
+          <li class="card"><strong>Phone / WhatsApp:</strong> <a class="link-red" href="https://wa.me/+94757255903" target="_blank" rel="noopener">+94 75 725 5903</a></li>
+          <li class="card"><strong>Location:</strong> Sri Lanka</li>
+        </ul>
+      </section>
+
+      <!-- PRIVACY -->
+      <section id="privacy" class="section">
+        <h2 class="section-title">Privacy Policy</h2>
+        <p>We collect only basic information necessary to provide services. We do not sell your data. For requests, email <a class="link-red" href="mailto:mrnipun@techweb.com">mrnipun@techweb.com</a>.</p>
+      </section>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="site-footer">© <span id="year"></span> MR NIPUN OFC / TECH-WEB. All Rights Reserved.</footer>
+
+  <!-- DRAGON INTRO OVERLAY -->
+  <div class="intro" id="dragonIntro" aria-hidden="true">
+    <div class="intro-core" role="img" aria-label="Dragon cinematic intro">
+      <div class="intro-ring"></div>
+      <svg class="intro-dragon" viewBox="0 0 200 200">
+        <defs>
+          <radialGradient id="flame" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#ffd7a1" />
+            <stop offset="45%" stop-color="#ff7a3d" />
+            <stop offset="100%" stop-color="#e63946" />
+          </radialGradient>
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="2.8" result="blur"/>
+            <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+        </defs>
+        <path d="M120 65c-6-10-18-15-30-12-16 4-27 18-26 34 1 9 7 17 15 21-4-11 0-22 10-29-1 8 2 15 8 19 7 5 16 5 24 0 7-4 12-11 13-19 3 4 7 7 12 8-3-8-10-15-18-22l-8-7z" fill="#e9ecf1" opacity="0.92" filter="url(#glow)" />
+        <circle cx="108" cy="85" r="2.2" fill="#ffdb4d" />
+        <path class="flame" d="M138,90 C160,88 170,92 180,98 170,100 163,104 155,110 165,110 172,114 178,120 165,120 154,117 144,112 140,110 138,104 138,98z" fill="url(#flame)" />
+        <circle class="smk smk1" cx="170" cy="92" r="3" fill="#ffefe0" opacity="0.8"/>
+        <circle class="smk smk2" cx="160" cy="104" r="2.6" fill="#ffe6d1" opacity="0.7"/>
+        <circle class="smk smk3" cx="175" cy="118" r="2.8" fill="#ffe6d1" opacity="0.65"/>
+      </svg>
+      <div class="intro-title">
+        <span class="intro-top">MR NIPUN OFC</span>
+        <span class="intro-sub">TECH-WEB</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Drawer logic
+    const hamburger = document.getElementById('hamburger');
+    const drawer = document.getElementById('drawer');
+    const backdrop = document.getElementById('backdrop');
+    const drawerClose = document.getElementById('drawerClose');
+
+    function openDrawer(){ drawer.classList.add('open'); backdrop.classList.add('show'); hamburger.classList.add('active'); }
+    function closeDrawer(){ drawer.classList.remove('open'); backdrop.classList.remove('show'); hamburger.classList.remove('active'); }
+
+    hamburger.addEventListener('click', ()=> drawer.classList.contains('open') ? closeDrawer() : openDrawer());
+    drawerClose.addEventListener('click', closeDrawer);
+    backdrop.addEventListener('click', closeDrawer);
+
+    // Smooth scroll for anchor links (and close drawer)
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        const id = a.getAttribute('href');
+        if(!id || id==="#" ) return;
+        const el = document.querySelector(id);
+        if(el){ e.preventDefault(); window.scrollTo({ top: el.offsetTop - 80, behavior: 'smooth' }); closeDrawer(); }
+      });
+    });
+
+    // Dragon intro — show once per session
+    const intro = document.getElementById('dragonIntro');
+    const seen = sessionStorage.getItem('dragonSeen');
+    if(seen === '1'){ intro.remove(); }
+    else{
+      setTimeout(()=>{ intro.style.transition='opacity .4s ease'; intro.style.opacity='0'; setTimeout(()=>intro.remove(), 420); sessionStorage.setItem('dragonSeen','1'); }, 2600);
+    }
+
+    // ESC to close drawer
+    window.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeDrawer(); }, {passive:true});
+  </script>
+</body>
+  </html>
